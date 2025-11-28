@@ -243,13 +243,13 @@ __Disadvantages:__
 
 ### [Hyperparameter Tuning]
 
-I performed hyperparameter tuning separately for [Google](https://github.com/devparth19/Stock-Market-Prediction/blob/main/parameter_tuning/hyperparameter_tuning_google_last.ipynb), [Meta](https://github.com/devparth19/Stock-Market-Prediction/blob/main/parameter_tuning/hyperparameter_tuning_meta_last.ipynb), [Apple](https://github.com/devparth19/Stock-Market-Prediction/blob/main/parameter_tuning/hyperparameter_tuning_apple_last.ipynb), and [NVIDIA](https://github.com/devparth19/Stock-Market-Prediction/blob/main/parameter_tuning/hyperparameter_tuning_nvidia_last.ipynb) using Optuna, an efficient hyperparameter optimization framework. Optuna was chosen for its ability to perform automated and flexible optimization through Bayesian search strategies. Unlike grid or random search, Optuna dynamically adjusts its search based on previous results, helping to find optimal hyperparameters more effectively and reducing computational overhead.
+I performed hyperparameter tuning separately for [Google], [Meta], [Apple], and [NVIDIA]using Optuna, an efficient hyperparameter optimization framework. Optuna was chosen for its ability to perform automated and flexible optimization through Bayesian search strategies. Unlike grid or random search, Optuna dynamically adjusts its search based on previous results, helping to find optimal hyperparameters more effectively and reducing computational overhead.
 
 
 During both hyperparameter tuning and training, I rescaled the time series data using Min-Max normalization. Min-Max normalization scales the data to a fixed range, typically [0, 1], which is particularly useful for time series since the values are often continuous and can vary across different magnitudes. 
 
 ### Model Training 
-I decided to use the LSTM architecture for the [Google](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_google.py), [Apple](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_apple.py), and [NVIDIA](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_nvidia.py) data, as it performed better during hyperparameter tuning. For [Meta](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_meta.py), the RNN architecture yielded marginally better results compared to LSTM model.
+I decided to use the LSTM architecture for the , [Apple], and [NVIDIA] data, as it performed better during hyperparameter tuning. For [Meta], the RNN architecture yielded marginally better results compared to LSTM model.
 
 
 __Why Use Early Stopping?__
@@ -260,21 +260,6 @@ A patience value of 15 strikes a balance between ensuring the model has enough t
 
 __Training Configuration__
 The total number of training epochs was set to 50. However, due to early stopping, training often concluded before reaching the maximum epoch limit, saving computational resources and reducing the risk of overfitting.
-
-__How can the model be trained?__
-First, you have to activate virtual environment:
-
-```venv\Scripts\activate``` 
-
-You can train the models running the codes provided below.
-
-[```python main_train_google.py```](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_google.py)
-
-[```python main_train_meta.py```](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_meta.py)
-
-[```python main_train_apple.py```](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_apple.py)
-
-[```python main_train_nvidia.py```](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_nvidia.py)
 
 
 
