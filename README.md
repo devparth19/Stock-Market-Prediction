@@ -1,41 +1,6 @@
 
 
 
-# Table of Contents
-
-1. [Stock Market Price Estimation](#stock-market-price-estimation)
-  
-
-2. [Project Structure](#project-structure)
-
-3. [Data Collection](#data-collection)
-
-4. [Stock Price Dataset Description](#stock-price-dataset-description)
-
-5. [EDA (Exploratory Data Analysis)](#eda-exploratory-data-analysis)
-   - [Comparison of Moving Averages](#comparison-of-moving-averages)
-   - [Time Series Analysis Comments for Google, Meta, Apple, and NVIDIA](#time-series-analysis-comments-for-google-meta-apple-and-nvidia)
-   - [Removing Outliers](#removing-outliers)
-
-6. [Training](#training)
-   - [Models](#models)
-   - [Metrics](#metrics)
-   - [Hyperparameter Tuning](#hyperparameter-tuning)
-   - [Model Training](#model-training)
-
-7. [Deployment with FastAPI](#deployment-with-fastapi)
-
-8. [Containerization using Docker](#containerization-using-docker)
-
-9. [Deployment to Cloud](#deployment-to-cloud)
-
-10. [Installation](#installation)
-
-11. [License](#license)
-
-12. [Acknowledgements](#acknowledgements)
-
-
 
 ## Stock Market Price Estimation
 
@@ -51,57 +16,11 @@ My aim is to analyze stock market price data for Google, Meta, Apple, and NVIDIA
 
 My project focuses on predicting the stock market's closing price for the 61st day based on the preceding 60 days of data. This provides an estimated future stock price, which can assist individuals in evaluating investment opportunities. Users can compare the predicted prices of companies such as Google, Meta, Apple, or NVIDIA to make more informed decisions about where to invest.
 
-## Project Structure
-
-The project is organized as follows:
-```
-stock_price_prediction/
-├── eda/
-│   ├── eda_stock_market_price_december12.ipynb
-│   └── figures/
-├── inputs/
-│   ├── aapl_stock_data.csv
-│   ├── google_stock_data.csv
-│   ├── meta_stock_data.csv
-│   ├── nvda_stock_data.csv
-│   ├── apple_stock_cleaned.csv
-│   ├── google_stock_cleaned.csv
-│   ├── meta_stock_cleaned.csv
-│   └── nvidia_stock_cleaned.csv
-├── outputs/
-│   ├── apple_scale.pkl
-│   ├── google_scale.pkl
-│   ├── meta_scale.pkl
-│   ├── nvidia_scale.pkl
-│   ├── stock_price_lstm_apple_model.keras
-│   ├── stock_price_lstm_nvidia_model.keras
-│   ├── stock_price_rnn_google_model.keras
-│   └── stock_price_rnn_meta_model.keras
-├── parameter_tuning/
-│   ├── hyperparameter_tuning_apple_last.ipynb
-│   ├── hyperparameter_tuning_google_last.ipynb
-│   ├── hyperparameter_tuning_meta_last.ipynb
-│   └── hyperparameter_tuning_nvidia_last.ipynb
-├── results/
-    ├── figures
-├── .gitignore
-├── Dockerfile
-├── README.md
-├── downloading_relevant_data.ipynb
-├── main.py
-├── main_train_apple.py
-├── main_train_google.py
-├── main_train_google.ipynb
-├── main_train_meta.py
-├── main_train_nvidia.py
-├── requirements.txt
-├── test_all_companies.py
-└── test_aws.py
-```
 
 
 
-## [Data Collection](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/downloading_relevant_data.ipynb)
+
+## [Data Collection]
 
 I used the [ ```yfinance```](https://github.com/ranaroussi/yfinance/tree/main?tab=readme-ov-file) library to download stock market price data for four companies—Google, Meta, Apple, and NVIDIA—from October 30, 2021, to October 30, 2024. The yfinance library is a Python tool for accessing historical market data, financial metrics, and company information from [Yahoo!Ⓡ finance](https://finance.yahoo.com/).
 
@@ -115,10 +34,6 @@ You can download the data in two steps as outlined below:
 2) Decide on the start and end dates, then download the data.
 
 ```stock_data = yf.download(tickers, start="2021-10-30", end="2024-10-30", group_by="ticker")```
-
-
-
- " ```yfinance``` is not affiliated, endorsed, or vetted by Yahoo, Inc. It's an open-source tool that uses Yahoo's publicly available APIs, and is intended for research and educational purposes. You should refer to Yahoo!'s terms of use ([here](https://legal.yahoo.com/us/en/yahoo/terms/product-atos/apiforydn/index.html), [here](https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html), and [here](https://policies.yahoo.com/us/en/yahoo/terms/index.htm)) for details on your rights to use the actual data downloaded."
 
 
 
@@ -140,21 +55,22 @@ In my project, I chose to analyze the __Close__ value from the stock price predi
 
 Unlike the open, low, or high values, which reflect specific moments or ranges during the trading day, the close value encapsulates the market's sentiment and activity for the entire trading session. It is often used by investors and analysts as a benchmark for decision-making, as it provides a clearer snapshot of how the stock performed on a given day.
 
-## [EDA (Exploratory Data Analysis)](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/tree/main/eda)
+## [EDA (Exploratory Data Analysis)]
 
 ### Comparison of Moving Averages:
 
 
 
 <p float="left">
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/Google_stock_price_MA.png" width="800" height="400" />
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/Meta_stock_price_MA.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/Google_stock_price_MA.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/Meta_stock_price_MA.png" width="800" height="400" />
 </p>
 
 <p float="left">
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/Apple_stock_price_MA.png" width="800" height="400" />
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/Nvidia_stock_price_MA.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/Apple_stock_price_MA.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/Nvidia_stock_price_MA.png" width="800" height="400" />
 </p>
+
 
 
 - Google and NVIDIA show the strongest trends with consistent golden crosses, indicating robust upward momentum.
@@ -173,10 +89,11 @@ __Actionable Insights:__
 __1. Google__
 
 <p float="left">
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/Google_Trend.png" width="800" height="400" />
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/Google_Seasonal.png" width="800" height="400" />
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/Google_Residual.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/Google_Trend.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/Google_Seasonal.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/Google_Residual.png" width="800" height="400" />
 </p>
+
 
 __Trend:__ The trend is consistently increasing, reflecting a steady growth pattern in the time series over the given period. This could indicate positive long-term growth or increased activity.
 __Seasonality:__ The seasonal component exhibits moderate fluctuations, showing periodic patterns that are relatively consistent. This suggests some underlying cyclical behavior in the data.
@@ -185,9 +102,9 @@ __Residual:__ The residuals are small and do not show significant spikes, indica
 __2. Meta__
 
 <p float="left">
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/Meta_Trend.png" width="800" height="400" />
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/Meta_Seasonal.png" width="800" height="400" />
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/Meta_Residual.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/Meta_Trend.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/Meta_Seasonal.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/Meta_Residual.png" width="800" height="400" />
 </p>
 
 __Trend:__ The trend is upward and fairly strong, indicating a significant increase in values over time. This suggests positive momentum in the dataset.
@@ -197,10 +114,11 @@ __Residual:__ The residuals show more variability and larger deviations compared
 __3. Apple__
 
 <p float="left">
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/Apple_Trend.png" width="800" height="400" />
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/Apple_Seasonal.png" width="800" height="400" />
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/Apple_Residual.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/Apple_Trend.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/Apple_Seasonal.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/Apple_Residual.png" width="800" height="400" />
 </p>
+
 
 
 __Trend:__ The trend is upward and consistent but slightly less steep than NVIDIA and Meta. It indicates steady growth over time.
@@ -210,10 +128,11 @@ __Residual:__ The residuals exhibit higher noise, suggesting that the model stru
 __4. NVIDIA__
 
 <p float="left">
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/NVIDIA_Trend.png" width="800" height="400" />
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/NVIDIA_Seasonal.png" width="800" height="400" />
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/NVIDIA_Residual.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/NVIDIA_Trend.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/NVIDIA_Seasonal.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/NVIDIA_Residual.png" width="800" height="400" />
 </p>
+
 
 
 __Trend:__ The trend for NVIDIA shows a strong and consistent upward movement, similar to Meta but with steeper growth. This indicates rapid changes or increases in the series.
@@ -224,19 +143,21 @@ __Residual:__ The residuals are relatively well-contained but exhibit some spike
 ### Removing Outliers 
 
 <p float="left">
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/close_disrubition.png" width="800" height="400" />
-  <img src="https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/eda/close_disrubition_outliers.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/close_disrubition.png" width="800" height="400" />
+  <img src="https://github.com/devparth19/Stock-Market-Prediction/blob/main/eda/close_disrubition_outliers.png" width="800" height="400" />
 </p>
+
 
 I conducted an outlier analysis for the four companies (Google, Meta, Apple, and Nvidia) and identified and removed outliers from the dataset. After the cleaning process, I saved the updated datasets to the following files:
 
-- [google_stock_cleaned.csv](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/inputs/google_stock_cleaned.csv)
+- [google_stock_cleaned.csv](https://github.com/devparth19/Stock-Market-Prediction/blob/main/inputs/google_stock_cleaned.csv)
 
-- [meta_stock_cleaned.csv](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/inputs/meta_stock_cleaned.csv)
+- [meta_stock_cleaned.csv](https://github.com/devparth19/Stock-Market-Prediction/blob/main/inputs/meta_stock_cleaned.csv)
 
-- [apple_stock_cleaned.csv](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/inputs/apple_stock_cleaned.csv)
+- [apple_stock_cleaned.csv](https://github.com/devparth19/Stock-Market-Prediction/blob/main/inputs/apple_stock_cleaned.csv)
 
-- [nvidia_stock_cleaned.csv](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/inputs/nvidia_stock_cleaned.csv)
+- [nvidia_stock_cleaned.csv](https://github.com/devparth19/Stock-Market-Prediction/blob/main/inputs/nvidia_stock_cleaned.csv)
+
 
 For the remainder of the project, I used this cleaned data for all subsequent experiments and analyses to ensure improved data quality and reliable results.
 
@@ -320,15 +241,16 @@ __Disadvantages:__
 - __Mean Absolute Percentage Error (MAPE):__ MAPE expresses the error as a percentage of the actual values. It shows how large the prediction error is relative to the actual value, giving a more intuitive sense of the model’s accuracy in percentage terms. MAPE is commonly used in time series forecasting because it normalizes the error by dividing by the actual values, which helps to understand the relative size of the error, especially when comparing models across datasets with different magnitudes. However, MAPE can be problematic when actual values are zero or very close to zero, as this causes large percentage errors.
 - __Symmetric Mean Absolute Percentage Error (sMAPE):__  sMAPE is a variation of MAPE that normalizes the error symmetrically by using both predicted and actual values in the denominator. It aims to avoid some issues with MAPE, especially when actual values are near zero. sMAPE is useful when comparing models across different time series datasets with varying scales, as it treats under- and over-forecasting equally. It helps mitigate issues caused by small actual values in MAPE and gives a more balanced error metric.
 
-### [Hyperparameter Tuning](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/tree/main/parameter_tuning)
+### [Hyperparameter Tuning]
 
-I performed hyperparameter tuning separately for [Google](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/parameter_tuning/hyperparameter_tuning_google_last.ipynb), [Meta](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/parameter_tuning/hyperparameter_tuning_meta_last.ipynb), [Apple](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/parameter_tuning/hyperparameter_tuning_apple_last.ipynb), and [NVIDIA](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/parameter_tuning/hyperparameter_tuning_nvidia_last.ipynb) using Optuna, an efficient hyperparameter optimization framework. Optuna was chosen for its ability to perform automated and flexible optimization through Bayesian search strategies. Unlike grid or random search, Optuna dynamically adjusts its search based on previous results, helping to find optimal hyperparameters more effectively and reducing computational overhead. 
+I performed hyperparameter tuning separately for [Google](https://github.com/devparth19/Stock-Market-Prediction/blob/main/parameter_tuning/hyperparameter_tuning_google_last.ipynb), [Meta](https://github.com/devparth19/Stock-Market-Prediction/blob/main/parameter_tuning/hyperparameter_tuning_meta_last.ipynb), [Apple](https://github.com/devparth19/Stock-Market-Prediction/blob/main/parameter_tuning/hyperparameter_tuning_apple_last.ipynb), and [NVIDIA](https://github.com/devparth19/Stock-Market-Prediction/blob/main/parameter_tuning/hyperparameter_tuning_nvidia_last.ipynb) using Optuna, an efficient hyperparameter optimization framework. Optuna was chosen for its ability to perform automated and flexible optimization through Bayesian search strategies. Unlike grid or random search, Optuna dynamically adjusts its search based on previous results, helping to find optimal hyperparameters more effectively and reducing computational overhead.
+
 
 During both hyperparameter tuning and training, I rescaled the time series data using Min-Max normalization. Min-Max normalization scales the data to a fixed range, typically [0, 1], which is particularly useful for time series since the values are often continuous and can vary across different magnitudes. 
 
 ### Model Training 
+I decided to use the LSTM architecture for the [Google](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_google.py), [Apple](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_apple.py), and [NVIDIA](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_nvidia.py) data, as it performed better during hyperparameter tuning. For [Meta](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_meta.py), the RNN architecture yielded marginally better results compared to LSTM model.
 
-I decided to use the LSTM architecture for the [Google](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/main_train_google.py), [Apple](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/main_train_google.py), and [NVIDIA](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/main_train_nvidia.py) data, as it performed better during hyperparameter tuning. For [Meta](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/main_train_meta.py), the RNN architecture yielded marginally better results compared to LSTM model.
 
 __Why Use Early Stopping?__
 Early stopping is a regularization technique that helps prevent overfitting by halting the training process when the model's performance on the validation set stops improving. This ensures that the model generalizes well to unseen data rather than memorizing patterns from the training data.
@@ -346,13 +268,14 @@ First, you have to activate virtual environment:
 
 You can train the models running the codes provided below.
 
-[```python main_train_google.py```](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/main_train_google.py)
+[```python main_train_google.py```](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_google.py)
 
-[```python main_train_meta.py```](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/main_train_meta.py)
+[```python main_train_meta.py```](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_meta.py)
 
-[```python main_train_apple.py```](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/main_train_apple.py)
+[```python main_train_apple.py```](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_apple.py)
 
-[```python main_train_nvidia.py```](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/main_train_nvidia.py)
+[```python main_train_nvidia.py```](https://github.com/devparth19/Stock-Market-Prediction/blob/main/main_train_nvidia.py)
+
 
 
 __Results Summary__
@@ -364,21 +287,25 @@ __Results Summary__
 | Apple       | 0.1824                        | 20.1099                                  | 22.9494                                             |
 | Nvidia      | 0.0436                        | 5.0240                                   | 4.4939                                              |
 
-![](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/results/google_result.png)
+![](https://github.com/devparth19/Stock-Market-Prediction/blob/main/results/google_result.png)
+
 
 For Meta, the predicted prices show some correlation with the actual prices but tend to lag behind the true movements. This delay suggests that the model may not be adequately capturing rapid fluctuations in stock prices. Using an LSTM model, which performed slightly worse in this case, could potentially lead to better results with further optimization.
 
 
-![](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/results/meta_result.png)
+![](https://github.com/devparth19/Stock-Market-Prediction/blob/main/results/meta_result.png)
+
 
 For Apple, the predicted prices (dashed line) consistently underestimate the actual stock prices (solid line). This indicates a potential bias in the model, where it struggles to accurately capture higher price fluctuations.
 
 
-![](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/results/apple_result.png)
+![](https://github.com/devparth19/Stock-Market-Prediction/blob/main/results/apple_result.png)
+
 
 For Nvidia, the predicted prices closely follow the actual stock prices, which is encouraging. However, there are instances where the model overshoots or undershoots.
 
-![](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/results/nvidia_result.png)
+![](https://github.com/devparth19/Stock-Market-Prediction/blob/main/results/nvidia_result.png)
+
 
 To improve Apple’s performance, we may achieve better results by using a smaller time_step (such as 35 or 40) instead of 60, along with an alternative normalization technique. This could enhance model performance, especially for noisy time series like Apple’s stock data. For example, using a Robust Scaler or Quantile Transformer might help mitigate the impact of outliers and noise, allowing the model to generalize more effectively.
 
@@ -386,129 +313,11 @@ To improve Apple’s performance, we may achieve better results by using a small
 
 Initially, I was uncertain whether to tune the ```time_step``` parameter or apply different normalization techniques for each time series. However, I decided to fix certain conditions to ensure a fair and consistent comparison across the four companies. 
 
-## Deployment with FastAPI
-
-FastAPI is faster than Flask because it is built on ASGI and uses asynchronous programming, allowing it to handle high-concurrency workloads more efficiently. Unlike Flask, FastAPI automatically generates interactive API documentation (e.g., Swagger UI), which saves time and simplifies collaboration. It also uses Python's type hints for automatic request validation, reducing the risk of errors, whereas Flask requires additional libraries or manual validation. While Flask is lightweight and flexible, FastAPI's modern design makes it better suited for building APIs that need to scale or handle real-time requests.
-
-I chose to use FastAPI instead of Flask, which is commonly used in the Zoomcamp, and created a [sub-repository](https://github.com/f-kuzey-edes-huyal/fastapi-project) to demonstrate how to work with FastAPI. The deployment process is straightforward and begins with the [main.py](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/main.py) file, which serves as the FastAPI application.
-
-To deploy the model, follow these steps:
-
-
-- Activate your virtual environment.
-
-  ```venv\Scripts\activate```
-  
-- Run the following command in the terminal to start the FastAPI server:
-
-```uvicorn main:app --reload```
-- To test the deployed model: Open a new terminal and activate the virtual environment using
-
-  ![](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/results/fastapi_stock_price.png)
-  
-  ```venv\Scripts\activate```
-
-- Use the [test_all_companies.py](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/test_all_companies.py) script to make requests to the API. You can do this by running:
-
-```python test_all_companies.py```
-
-
-![](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/results/testing_fastapi_all.png)
-
-## Containerization using Docker
-When I tried to use the requirements.txt file that I prepared in my Windows environment in a Linux-based Docker environment, I encountered compatibility issues. To resolve this, I copied the packages listed in the <code> requirements.txt </code> file, which I had created using <code> pip freeze > requirements.txt </code>, and asked ChatGPT to generate a new requirements.txt file. I then used the updated requirements.txt file suggested by ChatGPT.
-
-First, build the Docker image for the application.
-
-
-<code> docker build -t stockmarket . </code>
-
-Then, run the Docker container to deploy the model.
-
-<code> docker run -p 8000:8000 stockmarket </code>
-
-To test your model: Activate the virtual environment in another terminal (```venv\Scripts\activate```): and test the model (```python test_all_companies.py```)
-
-![](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/results/docker_running_fastapi.png)
-
-Finally, push the Docker image to Docker Hub. This will allow anyone to download the image and test the model easily.
-
-<code> docker login </code>
-
-<code> docker tag stockmarket fkuzeyedeshuyal/stockmarket </code>
-
-<code> docker push fkuzeyedeshuyal/stockmarket </code>
-
-You can download the image using the command given below.
-
-<code> docker pull fkuzeyedeshuyal/stockmarket:latest </code>
-
-## Deployment to Cloud
-
-I want to begin this section by expressing my gratitude to Ajith Punnakula for his help and patience throughout the deployment process. Without his support, I might have been overwhelmed by numerous timeout errors.
-
-I deployed my model on AWS using the following steps:
-
-- Go to EC2 Instances and click on Launch Instances.
-- Choose an AMI Image that is eligible for the Free Tier.
-- Create a Key Pair.
-- After setting the inbound rules correctly, launch the instance.
-  
-![myimage-alt-tag2](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/results/final_inbound_rules.png)
-
-![myimage-alt-tag1](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/results/final_instance_ip.png)
-
-- Click on the created instance, then click Connect, and finally, click the Connect button again. This will open a Linux terminal
-
- - Write the following commands
-   
-   ```sudo yum update -y```
-
-   ```sudo yum install -y docker```
-
-   ```sudo service docker start```
-
-   ```sudo usermod -a -G docker ec2-user```
-
-   ```docker ps```
 
 
 
 
-Next, I pulled the Docker image I had previously pushed to Docker Hub. After pulling the image, I ran it using Docker.
 
 
-```docker pull fkuzeyedeshuyal/stockmarket:latest``` 
-
-```docker run -p 8000:8000 fkuzeyedeshuyal/stockmarket:latest```
 
 
-Initially, I encountered an error because the inbound security rules for my EC2 instance were not set correctly. You can see the error in the screenshot at the top of the result.
-
-This error was resolved after properly configuring the inbound rules for my EC2 instance.
-
-![myimage-alt-tag3](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/results/final_aws_running1.png)
-
-![myimage-alt-tag4](https://github.com/f-kuzey-edes-huyal/stock_price_prediction/blob/main/results/final_aws_test.png)
-
-
-## Acknowledgements
-
-I want to express my thanks to Ajith Punnakula for the invaluable discussions we had throughout this project and during the Machine Learning Zoomcamp. His insights on coding practices, repository organization, and cloud deployment were incredibly enlightening.
-
-And lastly, even though it is not directly related to this project, I want to thank the reviewers of my midterm project for helping me write more structured code and for their encouraging comments.
-
-## Notes to Myself
-- You got full points from the repository :purple_heart:  :sparkling_heart: :star2:.
-- Vijaya Krishna from Omdena recommended using AI agents, which, as I understand, are particularly useful for web scraping. I will allocate time to understand AI agents more deeply and use them in practical applications.
-## Installation
-
-```git clone https://github.com/f-kuzey-edes-huyal/stock_price_prediction.git```
-
- - First, make sure you have Python 3.11.9 installed on your system.
- - Navigate to the Project Folder : ```cd stock_price_prediction```
- - Create a Virtual Environment: ```python -m venv venv```
- - Open the Project in Visual Studio Code: ```code .```
- - Activate the Virtual Environment: ```venv\Scripts\activate```
- - Upgrade pip: ```python -m pip install --upgrade pip```
- - Install Required Dependencies: ```pip install -r requirements.txt```
