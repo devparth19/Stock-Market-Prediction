@@ -252,17 +252,6 @@ During both hyperparameter tuning and training, I rescaled the time series data 
 I decided to use the LSTM architecture for the , [Apple], and [NVIDIA] data, as it performed better during hyperparameter tuning. For [Meta], the RNN architecture yielded marginally better results compared to LSTM model.
 
 
-__Why Use Early Stopping?__
-Early stopping is a regularization technique that helps prevent overfitting by halting the training process when the model's performance on the validation set stops improving. This ensures that the model generalizes well to unseen data rather than memorizing patterns from the training data.
-
-__Why Choose a Patience Value of 15?__
-A patience value of 15 strikes a balance between ensuring the model has enough time to converge and avoiding unnecessary training when improvements have plateaued. A smaller patience value (e.g., 5 or 10) might terminate training prematurely, especially in time series tasks, where validation loss often fluctuates before stabilizing. By allowing up to 15 epochs of no improvement, the model has the opportunity to fine-tune its weights and potentially discover a better solution.
-
-__Training Configuration__
-The total number of training epochs was set to 50. However, due to early stopping, training often concluded before reaching the maximum epoch limit, saving computational resources and reducing the risk of overfitting.
-
-
-
 __Results Summary__
 
 | **Dataset** | **Mean Absolute Error (MAE)** | **Mean Absolute Percentage Error (MAPE)** | **Symmetric Mean Absolute Percentage Error (sMAPE)** |
@@ -272,31 +261,29 @@ __Results Summary__
 | Apple       | 0.1824                        | 20.1099                                  | 22.9494                                             |
 | Nvidia      | 0.0436                        | 5.0240                                   | 4.4939                                              |
 
+
+
 ![](https://github.com/devparth19/Stock-Market-Prediction/blob/main/results/google_result.png)
 
 
-For Meta, the predicted prices show some correlation with the actual prices but tend to lag behind the true movements. This delay suggests that the model may not be adequately capturing rapid fluctuations in stock prices. Using an LSTM model, which performed slightly worse in this case, could potentially lead to better results with further optimization.
+
 
 
 ![](https://github.com/devparth19/Stock-Market-Prediction/blob/main/results/meta_result.png)
 
 
-For Apple, the predicted prices (dashed line) consistently underestimate the actual stock prices (solid line). This indicates a potential bias in the model, where it struggles to accurately capture higher price fluctuations.
+
 
 
 ![](https://github.com/devparth19/Stock-Market-Prediction/blob/main/results/apple_result.png)
 
 
-For Nvidia, the predicted prices closely follow the actual stock prices, which is encouraging. However, there are instances where the model overshoots or undershoots.
+
 
 ![](https://github.com/devparth19/Stock-Market-Prediction/blob/main/results/nvidia_result.png)
 
 
-To improve Apple’s performance, we may achieve better results by using a smaller time_step (such as 35 or 40) instead of 60, along with an alternative normalization technique. This could enhance model performance, especially for noisy time series like Apple’s stock data. For example, using a Robust Scaler or Quantile Transformer might help mitigate the impact of outliers and noise, allowing the model to generalize more effectively.
-
-.
-
-Initially, I was uncertain whether to tune the ```time_step``` parameter or apply different normalization techniques for each time series. However, I decided to fix certain conditions to ensure a fair and consistent comparison across the four companies. 
+ 
 
 
 
